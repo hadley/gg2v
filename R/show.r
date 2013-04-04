@@ -4,10 +4,9 @@
 #' @keywords internal
 show <- function(x) {
   if (file.exists(x)) {
-    browseURL(paste0("file://", td)
+    browseURL(paste0("file://", td))
   } else {
     browseURL(x)
   }
-
 }
 

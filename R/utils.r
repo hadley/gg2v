@@ -13,7 +13,6 @@ modify_list <- function(x, y) {
   modifyList(x, y)
 }
 
-
 is.dir <- function(x) {
   file.info(x)$isdir
 }

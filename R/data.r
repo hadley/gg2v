@@ -53,14 +53,8 @@ plot_data <- function(plot) {
   plot <- ggplot2:::plot_clone(plot)
 
   # Standardise data and aesthetics to remove dependence on plot settings
-
-  # If I wanted to support subset, it should be added here.
-  data <- lapply(plot$layers, function(l) l$data %||% plot$data)
-
-  aes <- lapply(plot$layers, function(l) {
-    combine_aes(l$mapping, l$geom_params, plot_aes = plot$mapping,
-      inherit = l$inherit.aes)
-  })
+  data <- standard_data(plot)
+  aes <- standard_aes(plot)
 
   # For each, data set, figure out what aesthetics we need
   combine_aes <- function(x) unique(unlist(x, use.names = FALSE))
@@ -91,6 +85,18 @@ render_data <- function(data, aes, env = parent.env()) {
   }
 
   out
+}
+
+standard_data <- function(plot) {
+  # If I wanted to support subset, it should be added here.
+  lapply(plot$layers, function(l) l$data %||% plot$data)
+}
+
+standard_aes <- function(plot) {
+  lapply(plot$layers, function(l) {
+    combine_aes(l$mapping, l$geom_params, plot_aes = plot$mapping,
+      inherit = l$inherit.aes)
+  })
 }
 
 combine_aes <- function(layer_aes, params, plot_aes = NULL, inherit = TRUE) {
