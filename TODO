@@ -1,0 +1,20 @@
+TODO
+
+* padding
+* categorical x and y axis
+* categorical colour scales
+* continuous colour scales
+* gray background
+* area scale
+* shape scale
+* bars
+* rects and tiles
+* lines and paths? will need path generators
+* think about testing framework
+
+* set aesthetics to specific values
+
+NOTES
+
+* geom_point needs adjustments for the default shape 
+  (since colour works like fill in that situation)
