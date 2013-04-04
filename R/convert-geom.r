@@ -7,6 +7,10 @@ convert_geom <- function(geom, data, aes, params) {
 convert_geom_point <- function(data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
 
+  if (!has_name("fill", props) && has_name("stroke", props)) {
+    props$fill <- props$stroke
+  }
+
   mark(
     type = "symbol",
     from = list(data = data),
@@ -20,12 +24,11 @@ convert_map <- function(x) {
   x <- lapply(x, deparse)
 
   # If aesthetic is a constant, need to use value instead of field
-
   map <- list(
     x      = valref(field = x$x, scale = "x"),
     y      = valref(field = x$y, scale = "y"),
-    fill   = valref(field = x$fill, scale = "fill") %||% valref("black"),
-    stroke = valref(field = x$colour, scale = "colour"),
+    fill   = valref(field = x$fill, scale = "fill"),
+    stroke = valref(field = x$colour, scale = "colour") %||% valref("black"),
     size   = valref(field = x$size, scale = "size"),
     shape  = valref(field = x$shape, scale = "shape")
   )

@@ -20,6 +20,18 @@ convert_shape <- function(x) {
   shape[x]
 }
 
+shape_aesthetics <- function(x) {
+  if (is.null(x)) return(x)
+
+  if (pch <= 14) {
+    c("stroke" = "colour")
+  } else if (pch <= 20) {
+    c("stroke" = "colour", "fill" = "colour")
+  } else {
+    c("stroke" = "colour", "fill" = "fill")
+  }
+}
+
 #' Approximately convert mm to pixels
 convert_size <- function(x, dpi = 72) {
   if (is.null(x)) return(x)
