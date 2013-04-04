@@ -3,8 +3,8 @@
 #' @export
 #' @param ggplot2 plot
 #' @param path Existing directory in which to save plot datasets.
-#' @return \code{save_data}: list that can be transformed to JSON to
-#'   produce vega data spec.
+#' @return \code{save_data}: (invisibly) a list that can be transformed to JSON
+#'   to produce vega data spec.
 #' @examples
 #' p1 <- ggplot(mtcars, aes(disp, cyl)) +
 #'   geom_point()
@@ -19,13 +19,19 @@
 #'   geom_point(aes(disp, colour = "mtcars"), data = mtcars) +
 #'   geom_point(aes(displ, colour = "mpg"), data = mpg)
 #' str(plot_data(p3))
+#'
+#' td <- temp_dir()
+#' save_data(p3, td)
+#' if (interactive()) show(td)
 save_data <- function(plot, path) {
   stopifnot(is.ggplot(plot))
   stopifnot(is.character(path), length(path) == 1,
     file.exists(path), is.dir(path))
 
   data <- plot_data(plot)
-  Map(save_one, data, names(data))
+  out <- Map(function(x, name) save_one(x, name, base_dir = path),
+    data, names(data))
+  invisible(out)
 }
 
 save_one <- function(x, name, base_dir) {
