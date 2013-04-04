@@ -28,7 +28,7 @@ plot_scales <- function(plot) {
   # Get or generate scales as needed
   get_scale <- function(aesthetic) {
     plot$scales$get_scales(aesthetic) %||%
-      find_scale(aesthetic, data, aes, plot$plot_env)
+      find_scale(aesthetic, data[data_hash], aes, plot$plot_env)
   }
   scales <- lapply(aesthetics, get_scale)
 

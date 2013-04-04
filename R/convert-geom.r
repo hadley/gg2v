@@ -18,15 +18,18 @@ convert_geom_point <- function(data_name, data, aes, params) {
   )
 }
 
+# qplot(mpg, wt, data = mtcars, geom = "path")
+# gg2v("~/desktop/vega-test/", name = "path")
+# qplot(mpg, wt, data = mtcars, geom = "path", group = cyl)
+# gg2v("~/desktop/vega-test/", name = "path-group")
+# qplot(mpg, wt, data = mtcars, geom = "path", group = cyl, colour = cyl)
+# gg2v("~/desktop/vega-test/", name = "path-group-colour")
+# qplot(mpg, wt, data = mtcars, geom = "path", colour = factor(cyl))
+# gg2v("~/desktop/vega-test/", name = "path-colour")
+# qplot(mpg, wt, data = mtcars, geom = "path", colour = factor(cyl)) + geom_point()
+# gg2v("~/desktop/vega-test/", name = "path-colour-point")
+
 #' @importFrom plyr is.discrete
-#' qplot(mpg, wt, data = mtcars, geom = "path")
-#' gg2v("~/desktop/vega-test/", name = "path")
-#' qplot(mpg, wt, data = mtcars, geom = "path", group = cyl)
-#' gg2v("~/desktop/vega-test/", name = "path-group")
-#' qplot(mpg, wt, data = mtcars, geom = "path", group = cyl, colour = cyl)
-#' gg2v("~/desktop/vega-test/", name = "path-group-colour")
-#' qplot(mpg, wt, data = mtcars, geom = "path", colour = factor(cyl))
-#' gg2v("~/desktop/vega-test/", name = "path-colour")
 convert_geom_path <- function(data_name, data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
 
