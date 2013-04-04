@@ -4,6 +4,7 @@ Title: Render ggplot2 graphics using vega
 Version: 0.1
 Author: Hadley Wickham <h.wickham@gmail.com>
 Maintainer: Hadley Wickham <h.wickham@gmail.com>
+URL: http://github.com/hadley/gg2v
 Description: 
 Depends:
     R,
