@@ -21,18 +21,23 @@ convert_geom_point <- function(data, aes, params) {
 convert_map <- function(x) {
   stopifnot(is.list(x))
 
-  x <- lapply(x, deparse)
-
-  # If aesthetic is a constant, need to use value instead of field
   map <- list(
-    x      = valref(field = x$x, scale = "x"),
-    y      = valref(field = x$y, scale = "y"),
-    fill   = valref(field = x$fill, scale = "fill"),
-    stroke = valref(field = x$colour, scale = "colour") %||% valref("black"),
-    size   = valref(field = x$size, scale = "size"),
-    shape  = valref(field = x$shape, scale = "shape")
+    x      = map_value(x$x, "x"),
+    y      = map_value(x$y, "y"),
+    fill   = map_value(x$fill, "fill"),
+    stroke = map_value(x$colour, "colour") %||% valref("black"),
+    size   = map_value(x$size, "size"),
+    shape  = map_value(x$shape, "shape")
   )
   compact(map)
+}
+
+map_value <- function(mapping, scale) {
+  if (is.atomic(mapping)) {
+    valref(value = mapping, scale = scale)
+  } else {
+    valref(field = deparse(mapping), scale = scale)
+  }
 }
 
 convert_set <- function(x) {
