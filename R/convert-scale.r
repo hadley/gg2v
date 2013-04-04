@@ -6,8 +6,23 @@ convert_scale.position_c <- function(x, uses, ...) {
     name = var,
     type = convert_trans(x$trans),
     domain = x$limits %||% uses,
-    range = c(x = "width", y = "height")[[var]])
+    range = c(x = "width", y = "height")[[var]],
+    zero = FALSE,
+    nice = TRUE
+  )
 }
+
+convert_scale.position_d <- function(x, uses, ...) {
+  var <- x$aesthetics[[1]]
+  scale(
+    name = var,
+    type = "ordinal",
+    domain = x$limits %||% uses,
+    points = TRUE,
+    range = c(x = "width", y = "height")[[var]]
+  )
+}
+
 
 convert_trans <- function(x) {
   map <- c(
