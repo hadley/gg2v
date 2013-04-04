@@ -1,6 +1,5 @@
 TODO
 
-* continuous colour scales
 * gray background
 * area scale
 * shape scale
@@ -18,3 +17,6 @@ NOTES
 
 * to support ggplot2's categorical scales, need some way to provide range
   functions to a scale
+
+* colour scales need to should be able to take an array of length more
+  than two, to support more complex colour scales

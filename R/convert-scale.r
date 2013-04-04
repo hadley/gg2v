@@ -33,6 +33,17 @@ convert_scale.hue <- function(x, uses, ...) {
   )
 }
 
+
+convert_scale.gradient <- function(x, uses, ...) {
+  scale(
+    name = x$aesthetics,
+    type = "linear",
+    domain = x$limits %||% uses,
+    range = x$palette(c(0, 1))
+  )
+}
+
+
 convert_trans <- function(x) {
   map <- c(
     "identity" = "linear", "sqrt" = "sqrt",
