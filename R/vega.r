@@ -35,10 +35,14 @@ vega <- function(plot, base_path = ".", name = "test", width = 600, height = 400
     height = height,
     data = data,
     scales = scales,
-    marks = layer
+    marks = layer,
+    axes = list(
+      list(type = "x", scale = "x"),
+      list(type = "y", scale = "y")
+    )
   )
 
-  spec <- toJSON(vis)
+  spec <- toJSON(vis, pretty = TRUE)
   writeLines(spec, spec_path)
 
   invisible()

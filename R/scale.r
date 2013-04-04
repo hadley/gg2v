@@ -8,6 +8,7 @@ scale <- function(name = NULL, type = NULL, domain = NULL, domainMin = NULL,
     domain = domain,
     domainMin = domainMin,
     domainMax = domainMax,
+    range = range,
     rangeMin = rangeMin,
     rangeMax = rangeMax,
     reverse = reverse,
@@ -18,5 +19,5 @@ scale <- function(name = NULL, type = NULL, domain = NULL, domainMin = NULL,
 dataref <- function(data, field) {
   stopifnot(is.character(data), length(data) == 1)
   stopifnot(is.character(field), length(field) >= 1)
-  list(data = data, field = field)
+  list(data = data, field = paste0("data.", field))
 }

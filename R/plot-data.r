@@ -31,7 +31,7 @@ save_data <- function(plot, path) {
   data <- plot_data(plot)
   out <- Map(function(x, name) save_one(x, name, base_dir = path),
     data, names(data))
-  invisible(out)
+  invisible(unname(out))
 }
 
 save_one <- function(x, name, base_dir) {
@@ -41,7 +41,7 @@ save_one <- function(x, name, base_dir) {
   list(
     name = name,
     url = file.path("data", basename(path)),
-    format = "csv"
+    format = list(type = "csv")
   )
 }
 

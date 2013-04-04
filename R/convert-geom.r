@@ -8,8 +8,8 @@ convert_geom_point <- function(data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
 
   mark(
-    type = "point",
-    from = data,
+    type = "symbol",
+    from = list(data = data),
     properties = mark_props(props)
   )
 }
@@ -22,9 +22,9 @@ convert_map <- function(x) {
   map <- list(
     x      = valref(field = x$x, scale = "x"),
     y      = valref(field = x$y, scale = "y"),
-    fill   = valref(field = x$fill, scale = "fill"),
+    fill   = valref(field = x$fill, scale = "fill") %||% valref("black"),
     stroke = valref(field = x$colour, scale = "colour"),
-    size   = valref(field = x$size, scale = "size"),
+    size   = valref(field = x$size, scale = "size") %||% valref(5),
     shape  = valref(field = x$shape, scale = "shape")
   )
   compact(map)

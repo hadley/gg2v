@@ -9,7 +9,7 @@
     <div id="vis"></div>
     <script type="text/javascript">
     vg.parse.spec("{{spec_path}}", function(chart) { 
-      chart({el:"#vis"}).update(); 
+      chart({el:"#vis"}).renderer("svg").update(); 
     });
     </script>
   </body>
