@@ -11,7 +11,7 @@ Please note that this is an __experimental prototype__, and is unlikely to be ma
   * x and y position scales (continuous and categorical)
   * colour gradients
   * limited support for categorical colours
-* geoms: point, line, path
+* geoms: point, line, path, area
 * stats: none
 * facets: none
 * position adjustments: none

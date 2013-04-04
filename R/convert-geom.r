@@ -49,6 +49,14 @@ convert_geom_path <- function(data_name, data, aes, params) {
   )
 }
 
+convert_geom_area <- function(data_name, data, aes, params) {
+  mark <- convert_geom_line(data_name, data, aes, params)
+  mark$marks[[1]]$type <- "area"
+  mark$marks[[1]]$properties$update$y2 <- valref(0, scale = "y")
+
+  mark
+}
+
 convert_geom_line <- function(data_name, data, aes, params) {
   mark <- convert_geom_path(data_name, data, aes, params)
 
