@@ -32,7 +32,7 @@ plot_scales <- function(plot) {
   }
   scales <- lapply(aesthetics, get_scale)
 
-  Map(convert_scale, scales, uses)
+  compact(Map(convert_scale, scales, uses))
 }
 
 find_scale <- function(scale, data, aesthetics, env) {
@@ -46,7 +46,8 @@ find_scale <- function(scale, data, aesthetics, env) {
     if (!is.null(candidate)) return(candidate)
   }
 
-  stop("Could not generate defaults for scale ", scale, call. = FALSE)
+  # stop("Could not generate defaults for scale ", scale, call. = FALSE)
+  NULL
 }
 
 

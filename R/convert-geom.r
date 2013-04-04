@@ -1,10 +1,10 @@
 #' Convert a geom into a mark specification
-convert_geom <- function(geom, data, aes, params) {
+convert_geom <- function(geom, data_name, data, aes, params) {
   f <- match.fun(paste0("convert_geom_", geom))
-  f(data, aes, params)
+  f(data_name, data, aes, params)
 }
 
-convert_geom_point <- function(data, aes, params) {
+convert_geom_point <- function(data_name, data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
 
   if (!has_name("fill", props) && has_name("stroke", props)) {
@@ -13,9 +13,50 @@ convert_geom_point <- function(data, aes, params) {
 
   mark(
     type = "symbol",
-    from = list(data = data),
+    from = list(data = data_name),
     properties = mark_props(props)
   )
+}
+
+#' @importFrom plyr is.discrete
+#' qplot(mpg, wt, data = mtcars, geom = "path")
+#' gg2v("~/desktop/vega-test/", name = "path")
+#' qplot(mpg, wt, data = mtcars, geom = "path", group = cyl)
+#' gg2v("~/desktop/vega-test/", name = "path-group")
+#' qplot(mpg, wt, data = mtcars, geom = "path", group = cyl, colour = cyl)
+#' gg2v("~/desktop/vega-test/", name = "path-group-colour")
+#' qplot(mpg, wt, data = mtcars, geom = "path", colour = factor(cyl))
+#' gg2v("~/desktop/vega-test/", name = "path-colour")
+convert_geom_path <- function(data_name, data, aes, params) {
+  props <- modify_list(convert_map(aes), convert_set(params))
+
+  mark(
+    type = "group",
+    from = list(
+      data = data_name,
+      transform = list(list(
+        type = "facet",
+        keys = group_by(aes, data)
+      ))
+    ),
+    marks = list(mark(
+      type = "line",
+      properties = mark_props(props)
+    ))
+  )
+}
+
+
+group_by <- function(aes, data) {
+  if (has_name("group", aes)) {
+    group_by <- deparse(aes$group)
+  } else {
+    is_discrete <- vapply(data, is.discrete, logical(1))
+    group_by <- names(data)[is_discrete]
+  }
+  if (length(group_by) > 0) group_by <- paste0("data.", group_by)
+
+  as.list(group_by)
 }
 
 convert_map <- function(x) {

@@ -6,6 +6,13 @@ is.waiver <- function(x) inherits(x, "waiver")
 
 compact <- function(x) Filter(Negate(is.null), x)
 
+maybe <- function(f) {
+  function(x, ...) {
+    if (is.null(x) || length(x) == 0) return()
+    f(x, ...)
+  }
+}
+
 modify_list <- function(x, y) {
   if (is.null(x)) x <- list()
   if (is.null(y)) y <- list()

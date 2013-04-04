@@ -4,9 +4,9 @@ mark_props <- function(update = NULL, enter = NULL, exit = NULL) {
 }
 
 mark <- function(type = NULL, name = NULL, description = NULL, from = NULL,
-                 properties = NULL, delay = NULL, ease = NULL) {
+                 properties = NULL, delay = NULL, ease = NULL, ...) {
   compact(list(type = type, name = name, description = description, from = from,
-    properties = properties, delay = delay, ease = ease))
+    properties = properties, delay = delay, ease = ease, ...))
 }
 
 valref <- function(value = NULL, field = NULL, scale = NULL, mult = NULL,

@@ -22,7 +22,7 @@
 #' @importFrom ggplot2 is.ggplot
 #' @importFrom RJSONIO toJSON
 #' @docType package
-gg2v <- function(plot, base_path = ".", name = "test", width = 600,
+gg2v <- function(base_path = ".", plot = last_plot(), name = "test", width = 600,
                  height = 400, padding = c(20, 20, 20, 20), debug = TRUE) {
   stopifnot(is.numeric(padding), length(padding) == 4)
   stopifnot(is.character(base_path), length(base_path) == 1,

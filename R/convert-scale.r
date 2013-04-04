@@ -1,5 +1,7 @@
 convert_scale <- function(x, uses, ...) UseMethod("convert_scale")
 
+convert_scale.NULL <- function(x, uses, ...) NULL
+
 convert_scale.position_c <- function(x, uses, ...) {
   var <- x$aesthetics[[1]]
   scale(

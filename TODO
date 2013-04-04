@@ -1,10 +1,10 @@
 TODO
 
+* lines - need sort transform
+* bars
 * area scale
 * shape scale
-* bars
 * rects and tiles
-* lines and paths? will need path generators
 * think about testing framework
 
 * set aesthetics to specific values
