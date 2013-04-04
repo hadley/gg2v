@@ -21,7 +21,7 @@
 #' @importFrom RJSONIO toJSON
 #' @docType package
 gg2v <- function(plot, base_path = ".", name = "test", width = 600,
-                 height = 400, padding = c(10, 10, 10, 10)) {
+                 height = 400, padding = c(20, 20, 20, 20)) {
   stopifnot(is.numeric(padding), length(padding) == 4)
   stopifnot(is.character(base_path), length(base_path) == 1,
     file.exists(base_path), is.dir(base_path))
@@ -52,6 +52,9 @@ gg2v <- function(plot, base_path = ".", name = "test", width = 600,
   scales <- plot_scales(plot)
   layer <- plot_layers(plot)
 
+  padding <- as.list(padding)
+  names(padding) <- c("top", "right", "bottom", "left")
+
   vis <- list(
     width = width,
     height = height,
@@ -61,7 +64,8 @@ gg2v <- function(plot, base_path = ".", name = "test", width = 600,
     axes = list(
       list(type = "x", scale = "x"),
       list(type = "y", scale = "y")
-    )
+    ),
+    padding = padding
   )
 
   spec <- toJSON(vis, pretty = TRUE)
