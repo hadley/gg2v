@@ -1,7 +1,5 @@
 TODO
 
-* categorical x and y axis
-* categorical colour scales
 * continuous colour scales
 * gray background
 * area scale
@@ -17,3 +15,6 @@ NOTES
 
 * geom_point needs adjustments for the default shape 
   (since colour works like fill in that situation)
+
+* to support ggplot2's categorical scales, need some way to provide range
+  functions to a scale

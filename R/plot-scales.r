@@ -22,7 +22,7 @@ plot_scales <- function(plot) {
   uses <- lapply(aesthetics, function(scale) {
     compact(lapply(data_hash, make_ref, scale = scale))
   })
-  # Until vega needss
+  # Until vega can handle
   uses <- lapply(uses, "[[", 1)
 
   # Get or generate scales as needed
@@ -48,6 +48,7 @@ find_scale <- function(scale, data, aesthetics, env) {
 
   stop("Could not generate defaults for scale ", scale, call. = FALSE)
 }
+
 
 default_scale <- function(scale, data, aesthetics, env) {
   var <- aesthetics[[scale]]

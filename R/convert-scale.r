@@ -23,6 +23,15 @@ convert_scale.position_d <- function(x, uses, ...) {
   )
 }
 
+convert_scale.hue <- function(x, uses, ...) {
+  scale(
+    name = x$aesthetics,
+    type = "ordinal",
+    domain = x$limits %||% uses,
+    points = TRUE,
+    range = x$palette(5)
+  )
+}
 
 convert_trans <- function(x) {
   map <- c(
