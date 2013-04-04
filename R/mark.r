@@ -18,7 +18,7 @@ valref <- function(value = NULL, field = NULL, scale = NULL, mult = NULL,
 
   compact(list(
     value = value,
-    field = field,
+    field = if (!is.null(field)) paste0("data.", field),
     scale = scale,
     mult = mult,
     offset = offset,

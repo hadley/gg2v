@@ -55,13 +55,14 @@ default_scale <- function(scale, data, aesthetics, env) {
   # Variable not used on this layer
   if (is.null(var)) return()
 
+  var <- deparse(var)
   val <- data[[var]]
   # Value not present on this layer
   if (is.null(val)) return()
 
-  type <- scale_type(val)
-  scale_name <- paste("scale", aes, type, sep="_")
-  scale_f <- find_global(scale_name, env)
+  type <- ggplot2:::scale_type(val)
+  scale_name <- paste("scale", scale, type, sep="_")
+  scale_f <- ggplot2:::find_global(scale_name, env)
 
   # Aesthetics doesn't need a scale
   if (is.null(scale_f)) return()

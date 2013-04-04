@@ -17,7 +17,7 @@
 #'
 #' p3 <- ggplot(mapping = aes(y = cyl)) +
 #'   geom_point(aes(disp, colour = "mtcars"), data = mtcars) +
-#'   geom_point(aes(displ, colour = "mpg"), data = mpg)
+#'   geom_point(aes(displ * 61, colour = "mpg"), data = mpg)
 #' str(plot_data(p3))
 #'
 #' td <- temp_dir()
