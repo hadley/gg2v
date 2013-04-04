@@ -16,12 +16,14 @@
 #' @param height height of visualisation in pixels
 #' @param padding a numeric vector of length 4 giving the padding on the
 #'  top, right, bottom and left sides respectively.
+#' @param debug if \code{TRUE} embeds spec in file and uses svg renderer,
+#'   which makes the plot easier to debug
 #' @importFrom whisker whisker.render
 #' @importFrom ggplot2 is.ggplot
 #' @importFrom RJSONIO toJSON
 #' @docType package
 gg2v <- function(plot, base_path = ".", name = "test", width = 600,
-                 height = 400, padding = c(20, 20, 20, 20)) {
+                 height = 400, padding = c(20, 20, 20, 20), debug = TRUE) {
   stopifnot(is.numeric(padding), length(padding) == 4)
   stopifnot(is.character(base_path), length(base_path) == 1,
     file.exists(base_path), is.dir(base_path))
@@ -36,13 +38,6 @@ gg2v <- function(plot, base_path = ".", name = "test", width = 600,
   from <- dir(system.file("vega", package = "gg2v"), full.names = TRUE)
   to <- file.path(vega_dir, basename(from))
   file.copy(from, to)
-
-  # Render html template
-  tmpl <- readLines(system.file("templates", "render.html", package = "gg2v"))
-  out <- whisker.render(tmpl, list(
-    title = paste0("gg2v: ", name),
-    spec_path = basename(spec_path)))
-  writeLines(out, html_path)
 
   # Copy needed files over
   data_dir <- file.path(base_path, "data")
@@ -69,7 +64,27 @@ gg2v <- function(plot, base_path = ".", name = "test", width = 600,
   )
 
   spec <- toJSON(vis, pretty = TRUE)
-  writeLines(spec, spec_path)
+
+  # Render html template
+  if (!debug) {
+    tmpl <- readLines(system.file("templates", "render.html", package = "gg2v"))
+    out <- whisker.render(tmpl, list(
+      title = paste0("gg2v: ", name),
+      spec_path = basename(spec_path)))
+    writeLines(out, html_path)
+
+    writeLines(spec, spec_path)
+  } else {
+    tmpl <- readLines(system.file("templates", "debug.html", package = "gg2v"))
+    out <- whisker.render(tmpl, list(
+      title = paste0("gg2v: ", name),
+      spec = spec))
+    writeLines(out, html_path)
+
+  }
+
+
+
 
   invisible()
 }

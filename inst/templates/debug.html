@@ -7,10 +7,11 @@
   </head>
   <body>
     <div id="vis"></div>
-    <script type="text/javascript">
-    vg.parse.spec("{{spec_path}}", function(chart) { 
-      chart({el:"#vis"}).update(); 
-    });
-    </script>
+<script type="text/javascript">
+spec = {{{spec}}};
+vg.parse.spec(spec, function(chart) { 
+  chart({el:"#vis"}).renderer("svg").update(); 
+});
+</script>
   </body>
 </html>
