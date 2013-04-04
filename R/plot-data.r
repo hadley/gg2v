@@ -40,7 +40,7 @@ save_one <- function(x, name, base_dir) {
 
   list(
     name = name,
-    url = path,
+    url = file.path("data", basename(path)),
     format = "csv"
   )
 }

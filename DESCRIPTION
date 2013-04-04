@@ -9,5 +9,7 @@ Depends:
     R,
 Imports:
     ggplot2,
-    digest
+    digest,
+    whisker,
+    RJSONIO
 License: GPL

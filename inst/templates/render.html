@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="vega/vega.css"/>
+    <script src="vega/d3.v3.min.js"></script>
+    <script src="vega/vega.js"></script>
+  </head>
+  <body>
+    <div id="vis"></div>
+    <script type="text/javascript">
+    vg.parse.spec("{{spec_path}}", function(chart) { 
+      chart({el:"#vis"}).update(); 
+    });
+    </script>
+  </body>
+</html>
