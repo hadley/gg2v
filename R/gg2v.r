@@ -17,6 +17,8 @@
 #' @param padding a numeric vector of length 4 giving the padding on the
 #'  top, right, bottom and left sides respectively.
 #' @importFrom whisker whisker.render
+#' @importFrom ggplot2 is.ggplot
+#' @importFrom RJSONIO toJSON
 #' @docType package
 gg2v <- function(plot, base_path = ".", name = "test", width = 600,
                  height = 400, padding = c(10, 10, 10, 10)) {

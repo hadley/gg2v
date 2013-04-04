@@ -14,3 +14,16 @@ Imports:
     whisker,
     RJSONIO
 License: GPLv3
+Collate:
+    'convert-aesthetics.r'
+    'convert-geom.r'
+    'convert-scale.r'
+    'gg2v.r'
+    'mark.r'
+    'plot-data.r'
+    'plot-layer.r'
+    'plot-scales.r'
+    'scale.r'
+    'show.r'
+    'temp-dir.r'
+    'utils.r'

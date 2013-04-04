@@ -1,0 +1,8 @@
+export(gg2v)
+export(plot_data)
+export(save_data)
+export(temp_dir)
+importFrom(RJSONIO,toJSON)
+importFrom(digest,digest)
+importFrom(ggplot2,is.ggplot)
+importFrom(whisker,whisker.render)
