@@ -11,3 +11,16 @@ plot_layers <- function(plot) {
 
   Map(convert_geom, geoms, data_hash, aes, params)
 }
+
+bg_layer <- function()  {
+  mark(
+    type = "rect",
+    name = "background",
+    properties = mark_props(enter = list(
+      fill = valref(convert_colour("grey90")),
+      y2 = valref(0),
+      y = valref(1000),
+      x = valref(0),
+      x2 = valref(1000)))
+  )
+}

@@ -45,7 +45,7 @@ gg2v <- function(plot, base_path = ".", name = "test", width = 600,
 
   data <- save_data(plot, data_dir)
   scales <- plot_scales(plot)
-  layer <- plot_layers(plot)
+  layer <- c(list(bg_layer()), plot_layers(plot))
 
   padding <- as.list(padding)
   names(padding) <- c("top", "right", "bottom", "left")
