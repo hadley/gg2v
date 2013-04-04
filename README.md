@@ -7,8 +7,11 @@ This approach uses relatively little existing ggplot2 code, and the semantics ma
 Please note that this is an __experimental prototype__, and is unlikely to be maintained long-term (unless someone else volunteers). 
 # Currently supported
 
-* scales: continuous x and y position scales
-* geoms: point
+* scales: 
+  * x and y position scales (continuous and categorical)
+  * colour gradients
+  * limited support for categorical colours
+* geoms: point, line, path
 * stats: none
 * facets: none
 * position adjustments: none
