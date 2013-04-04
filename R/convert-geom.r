@@ -17,6 +17,8 @@ convert_geom_point <- function(data, aes, params) {
 convert_map <- function(x) {
   stopifnot(is.list(x))
 
+  # If aesthetic is a constant, need to use value instead of field
+
   map <- list(
     x      = valref(field = x$x, scale = "x"),
     y      = valref(field = x$y, scale = "y"),

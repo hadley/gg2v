@@ -106,11 +106,12 @@ combine_aes <- function(layer_aes, params, plot_aes = NULL, inherit = TRUE) {
     aesthetics <- layer_aes
   }
 
-  # Drop aesthetics that are set or calculated
+  # Drop aesthetics that are set, calculated or constant
   set <- names(aesthetics) %in% names(params)
   calculated <- is_calculated_aes(aesthetics)
+  constant <- vapply(aesthetics, is.atomic, logical(1))
 
-  aesthetics[!set & !calculated]
+  aesthetics[!set & !calculated & !constant]
 }
 
 is_calculated_aes <- function(aesthetics) {

@@ -13,3 +13,10 @@ scale <- function(name = NULL, type = NULL, domain = NULL, domainMin = NULL,
     reverse = reverse,
     round = round))
 }
+
+
+dataref <- function(data, field) {
+  stopifnot(is.character(data), length(data) == 1)
+  stopifnot(is.character(field), length(field) >= 1)
+  list(data = data, field = field)
+}

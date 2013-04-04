@@ -1,11 +1,11 @@
-convert_scale <- function(x, ...) UseMethod("convert_scale")
+convert_scale <- function(x, uses, ...) UseMethod("convert_scale")
 
-convert_scale.position_c <- function(x) {
+convert_scale.position_c <- function(x, uses, ...) {
   var <- x$aesthetics[[1]]
   scale(
     name = var,
     type = convert_trans(x$trans),
-    domain = x$limits,
+    domain = x$limits %||% uses,
     range = c(x = "width", y = "height")[[var]])
 }
 
