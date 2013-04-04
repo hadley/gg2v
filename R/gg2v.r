@@ -17,7 +17,8 @@
 #' @param padding a numeric vector of length 4 giving the padding on the
 #'  top, right, bottom and left sides respectively.
 #' @importFrom whisker whisker.render
-vega <- function(plot, base_path = ".", name = "test", width = 600,
+#' @docType package
+gg2v <- function(plot, base_path = ".", name = "test", width = 600,
                  height = 400, padding = c(10, 10, 10, 10)) {
   stopifnot(is.numeric(padding), length(padding) == 4)
   stopifnot(is.character(base_path), length(base_path) == 1,
