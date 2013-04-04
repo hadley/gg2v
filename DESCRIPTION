@@ -1,0 +1,13 @@
+Package: gg2v
+Type: Package
+Title: Render ggplot2 graphics using vega
+Version: 0.1
+Author: Hadley Wickham <h.wickham@gmail.com>
+Maintainer: Hadley Wickham <h.wickham@gmail.com>
+Description: 
+Depends:
+    R,
+Imports:
+    ggplot2,
+    digest
+License: GPL
