@@ -49,6 +49,19 @@ convert_geom_path <- function(data_name, data, aes, params) {
   )
 }
 
+convert_geom_line <- function(data_name, data, aes, params) {
+  mark <- convert_geom_path(data_name, data, aes, params)
+
+  mark$from$transform <- c(
+    list(list(
+      type = "sort",
+      by = paste0("data.", deparse(aes$x))
+    )),
+    mark$from$transform
+  )
+
+  mark
+}
 
 group_by <- function(aes, data) {
   if (has_name("group", aes)) {
