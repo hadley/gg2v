@@ -4,9 +4,22 @@ TODO
 * area scale
 * shape scale
 * rects and tiles
-* think about testing framework
 
-* set aesthetics to specific values
+* testing framework
+  * ideally output spec, svg, rendered png and ggplot2 reference plot (png)
+  * will probably node installed
+  * use git to spot changes
+
+* process statistics
+  * map variable names to aesthetics
+  * transform according to scales
+  * compute statistics
+  * set up special scales mapping (e.g. y = ..count..)
+  * back-transform according to scales
+  * unmap variable names (where possible)
+
+* process facetting
+  * embed each layer in group mark(s)
 
 NOTES
 
@@ -15,3 +28,5 @@ NOTES
 
 * colour scales need to should be able to take an array of length more
   than two, to support more complex colour scales
+
+* need legends, and better support for automatic layout of axes

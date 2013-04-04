@@ -63,29 +63,9 @@ plot_data <- function(plot) {
   data_aes <- lapply(split(aes, data_hash), combine_aes)
   udata <- lapply(split(data, data_hash), "[[", 1)
 
-  # Evaluate all aesthetics so we don't need to do any computation in
-  # javascript
+  # Evaluate all aesthetics so we don't need to do any computation in js
   Map(function(data, aes) render_data(data, aes, env = plot$plot_env),
     udata, data_aes)
-}
-
-add_group <- function(data) {
-  if (empty(data)) return(data)
-
-  if (is.null(data$group)) {
-    disc <- vapply(data, is.discrete, logical(1))
-    disc[names(disc) == "label"] <- FALSE
-
-    if (any(disc)) {
-      data$group <- id(data[disc], drop = TRUE)
-    } else {
-      data$group <- 1L
-    }
-  } else {
-    data$group <- id(data["group"], drop = TRUE)
-  }
-
-  data
 }
 
 render_data <- function(data, aes, env = parent.env()) {
