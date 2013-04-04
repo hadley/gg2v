@@ -13,4 +13,4 @@ Imports:
     digest,
     whisker,
     RJSONIO
-License: GPL
+License: GPLv3
