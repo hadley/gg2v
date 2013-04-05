@@ -1,13 +1,20 @@
 TODO
 
-* bars
-* area scale
-* shape scale
-* rects and tiles
+* rects, bars and tiles
+
+* other geoms: ribbon, smooth, crossbar, errorbar, linerange, polygon, rug, 
+    step, text
+
+* other scales: area, shape, alpha, date, date time
+
+* position adjustments turn into data transforms (+ change var mapping)
+  * jitter: no equiv
+  * stack: stack
+  * fill: stack + offset = expand
+  * dodge: no equiv?
 
 * testing framework
-  * ideally output spec, svg, rendered png and ggplot2 reference plot (png)
-  * will probably node installed
+  * ideally output spec, rendered png and ggplot2 png
   * use git to spot changes
 
 * process statistics
@@ -21,6 +28,8 @@ TODO
 * process facetting
   * embed each layer in group mark(s)
 
+* explore behaviour of missing values in vega
+
 NOTES
 
 * to support ggplot2's categorical scales, need some way to provide range
@@ -30,3 +39,7 @@ NOTES
   than two, to support more complex colour scales
 
 * need legends, and better support for automatic layout of axes
+
+* no support for dashed lines?
+
+* 
