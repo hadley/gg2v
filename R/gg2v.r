@@ -40,6 +40,7 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
   if (!file.exists(data_dir)) dir.create(data_dir)
 
   spec <- plot_spec(plot, data_dir = data_dir, ...)
+  spec_js <- toJSON(vis, pretty = debug)
 
   # Render html template
   if (!debug) {
@@ -49,12 +50,12 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
       spec_path = basename(spec_path)))
     writeLines(out, html_path)
 
-    writeLines(spec, spec_path)
+    writeLines(spec_js, spec_path)
   } else {
     tmpl <- readLines(system.file("templates", "debug.html", package = "gg2v"))
     out <- whisker.render(tmpl, list(
       title = paste0("gg2v: ", name),
-      spec = spec))
+      spec = spec_js))
     writeLines(out, html_path)
 
   }
@@ -81,7 +82,6 @@ plot_spec <- function(plot,
   stopifnot(is.numeric(height), length(height) == 1, height > 0)
   stopifnot(is.numeric(padding), length(padding) == 4)
 
-
   if (embed_data) {
     data <- plot_data(plot)
     data_df <- lapply(data, d3df)
@@ -98,7 +98,7 @@ plot_spec <- function(plot,
   padding <- as.list(padding)
   names(padding) <- c("top", "right", "bottom", "left")
 
-  vis <- list(
+  list(
     width = width,
     height = height,
     data = data,
@@ -110,8 +110,14 @@ plot_spec <- function(plot,
     ),
     padding = padding
   )
+}
 
-  toJSON(vis, pretty = TRUE)
+save_spec <- function(path, plot = last_plot(), ...) {
+  stopifnot(is.character(path), length(path) == 1, file.exists(dirname(path)))
+
+  spec <- plot_spec(plot, embed_data = TRUE, ...)
+  spec_js <- toJSON(spec, pretty = TRUE)
+  writeLines(spec_js, path)
 }
 
 d3df <- function(x) {
