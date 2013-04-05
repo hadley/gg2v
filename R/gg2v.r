@@ -40,7 +40,7 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
   if (!file.exists(data_dir)) dir.create(data_dir)
 
   spec <- plot_spec(plot, data_dir = data_dir, ...)
-  spec_js <- toJSON(vis, pretty = debug)
+  spec_js <- toJSON(spec, pretty = debug)
 
   # Render html template
   if (!debug) {
