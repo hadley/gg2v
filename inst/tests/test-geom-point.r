@@ -1,5 +1,6 @@
 context("geom: point")
 
+set.seed(1014)
 df <- data.frame(x = runif(5), y = runif(5), z = runif(5))
 
 base <- ggplot(df, aes(x, y))
