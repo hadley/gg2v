@@ -12,19 +12,15 @@
 #' @param base_path path in which to save all visualisation files.  Must
 #'   already exist.
 #' @param name name of visualisation. Used to name html and js spec files
-#' @param width width of visualisation in pixels
-#' @param height height of visualisation in pixels
-#' @param padding a numeric vector of length 4 giving the padding on the
-#'  top, right, bottom and left sides respectively.
+#' @param ... other arguments passed on to \code{\link{plot_spec}}
 #' @param debug if \code{TRUE} embeds spec in file and uses svg renderer,
 #'   which makes the plot easier to debug
 #' @importFrom whisker whisker.render
 #' @importFrom ggplot2 is.ggplot
 #' @importFrom RJSONIO toJSON
 #' @docType package
-gg2v <- function(base_path = ".", plot = last_plot(), name = "test", width = 600,
-                 height = 400, padding = c(20, 20, 20, 20), debug = TRUE) {
-  stopifnot(is.numeric(padding), length(padding) == 4)
+gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
+                 debug = TRUE) {
   stopifnot(is.character(base_path), length(base_path) == 1,
     file.exists(base_path), is.dir(base_path))
 
@@ -42,6 +38,48 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", width = 600
   # Copy needed files over
   data_dir <- file.path(base_path, "data")
   if (!file.exists(data_dir)) dir.create(data_dir)
+
+  spec <- plot_spec(plot, data_dir, ...)
+
+  # Render html template
+  if (!debug) {
+    tmpl <- readLines(system.file("templates", "render.html", package = "gg2v"))
+    out <- whisker.render(tmpl, list(
+      title = paste0("gg2v: ", name),
+      spec_path = basename(spec_path)))
+    writeLines(out, html_path)
+
+    writeLines(spec, spec_path)
+  } else {
+    tmpl <- readLines(system.file("templates", "debug.html", package = "gg2v"))
+    out <- whisker.render(tmpl, list(
+      title = paste0("gg2v: ", name),
+      spec = spec))
+    writeLines(out, html_path)
+
+  }
+
+  invisible()
+}
+
+default_name <- function(plot) {
+  ggplot2:::digest.ggplot(plot)
+}
+
+
+#' @param width width of visualisation in pixels
+#' @param height height of visualisation in pixels
+#' @param padding a numeric vector of length 4 giving the padding on the
+#'  top, right, bottom and left sides respectively.
+#' @export
+plot_spec <- function(plot, data_dir, width = 600, height = 400,
+                      padding = c(20, 20, 20, 20)) {
+  stopifnot(is.ggplot(plot))
+  stopifnot(is.character(data_dir), length(data_dir) == 1,
+    file.exists(data_dir), is.dir(data_dir))
+  stopifnot(is.numeric(width), length(width) == 1, width > 0)
+  stopifnot(is.numeric(height), length(height) == 1, height > 0)
+  stopifnot(is.numeric(padding), length(padding) == 4)
 
   data <- save_data(plot, data_dir)
   scales <- plot_scales(plot)
@@ -63,33 +101,5 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", width = 600
     padding = padding
   )
 
-  spec <- toJSON(vis, pretty = TRUE)
-
-  # Render html template
-  if (!debug) {
-    tmpl <- readLines(system.file("templates", "render.html", package = "gg2v"))
-    out <- whisker.render(tmpl, list(
-      title = paste0("gg2v: ", name),
-      spec_path = basename(spec_path)))
-    writeLines(out, html_path)
-
-    writeLines(spec, spec_path)
-  } else {
-    tmpl <- readLines(system.file("templates", "debug.html", package = "gg2v"))
-    out <- whisker.render(tmpl, list(
-      title = paste0("gg2v: ", name),
-      spec = spec))
-    writeLines(out, html_path)
-
-  }
-
-
-
-
-  invisible()
+  toJSON(vis, pretty = TRUE)
 }
-
-default_name <- function(plot) {
-  ggplot2:::digest.ggplot(plot)
-}
-
