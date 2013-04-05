@@ -172,11 +172,8 @@
 						"field" : "data.y",
 						"scale" : "y"
 					},
-					"stroke" : {
-						"value" : "black"
-					},
 					"fill" : {
-						"value" : "black"
+						"value" : "#000000"
 					}
 				}
 			}

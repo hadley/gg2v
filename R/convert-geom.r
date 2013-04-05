@@ -5,6 +5,8 @@ convert_geom <- function(geom, data_name, data, aes, params) {
 }
 
 convert_geom_point <- function(data_name, data, aes, params) {
+  def <- list(fill = "black")
+  params <- modify_list(def, params)
   props <- modify_list(convert_map(aes), convert_set(params))
 
   if (!has_name("fill", props) && has_name("stroke", props)) {
@@ -18,9 +20,43 @@ convert_geom_point <- function(data_name, data, aes, params) {
   )
 }
 
+convert_geom_text <- function(data_name, data, aes, params) {
+  map <- convert_map(aes)
+  map$stroke <- NULL
+  map$fill <- map_value(aes$colour, "colour")
+  map$text <- map_value(aes$label)
+  map$fontSize <- map_value(aes$size, "size")
+
+  par <- convert_set(params)
+  par$stroke <- NULL
+  par$fill <- valref(params$colour)
+  par$text <- valref(params$label)
+  par$fontSize <- valref(convert_size(params$size))
+  par$align <- valref(params$hjust)
+  par$baseline <- valref(params$vjust)
+  par$angle <- valref(params$angle)
+
+  # Font settings
+  face <- convert_face(params$fontface)
+  par$font <- valref(params$fontfamily)
+  par$fontWeight <- valref(face$weight)
+  par$fontStyle <- valref(face$style)
+
+  props <- modify_list(map, par)
+  props$fontSize <- props$fontSize %||% valref(convert_size(5))
+  props$fill <- props$fill %||% valref(convert_colour("black"))
+
+  mark(
+    type = "text",
+    from = list(data = data_name),
+    properties = mark_props(props)
+  )
+}
+
 #' @importFrom plyr is.discrete
 convert_geom_path <- function(data_name, data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
+  props$stroke <- props$stroke %||% valref(convert_colour("black"))
 
   mark(
     type = "group",
@@ -79,14 +115,14 @@ convert_map <- function(x) {
     x      = map_value(x$x, "x"),
     y      = map_value(x$y, "y"),
     fill   = map_value(x$fill, "fill"),
-    stroke = map_value(x$colour, "colour") %||% valref("black"),
+    stroke = map_value(x$colour, "colour"),
     size   = map_value(x$size, "size"),
     shape  = map_value(x$shape, "shape")
   )
   compact(map)
 }
 
-map_value <- function(mapping, scale) {
+map_value <- function(mapping, scale = NULL) {
   if (is.atomic(mapping)) {
     valref(value = mapping, scale = scale)
   } else {

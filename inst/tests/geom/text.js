@@ -3,47 +3,22 @@
 	"height" : 400,
 	"data" : [
 		{
-			"name" : "8047920d4df701c4f21074042acae49f",
+			"name" : "89316d93e94ab2dd70437fd77dbe71f4",
 			"values" : [
 				{
 					"x" : 1,
-					"y" : 25
+					"y" : 1,
+					"label" : "a"
 				},
 				{
 					"x" : 2,
-					"y" : 16
+					"y" : 2,
+					"label" : "b"
 				},
 				{
 					"x" : 3,
-					"y" : 9
-				},
-				{
-					"x" : 4,
-					"y" : 4
-				},
-				{
-					"x" : 5,
-					"y" : 1
-				},
-				{
-					"x" : 6,
-					"y" : 0
-				},
-				{
-					"x" : 7,
-					"y" : 1
-				},
-				{
-					"x" : 8,
-					"y" : 4
-				},
-				{
-					"x" : 9,
-					"y" : 9
-				},
-				{
-					"x" : 10,
-					"y" : 16
+					"y" : 3,
+					"label" : "c"
 				}
 			]
 		}
@@ -53,7 +28,7 @@
 			"name" : "x",
 			"type" : "linear",
 			"domain" : {
-				"data" : "8047920d4df701c4f21074042acae49f",
+				"data" : "89316d93e94ab2dd70437fd77dbe71f4",
 				"field" : "data.x"
 			},
 			"range" : "width",
@@ -64,7 +39,7 @@
 			"name" : "y",
 			"type" : "linear",
 			"domain" : {
-				"data" : "8047920d4df701c4f21074042acae49f",
+				"data" : "89316d93e94ab2dd70437fd77dbe71f4",
 				"field" : "data.y"
 			},
 			"range" : "height",
@@ -97,36 +72,31 @@
 			}
 		},
 		{
-			"type" : "group",
+			"type" : "text",
 			"from" : {
-				"data" : "8047920d4df701c4f21074042acae49f",
-				"transform" : [
-					{
-						"type" : "facet",
-						"keys" : []
-					}
-				]
+				"data" : "89316d93e94ab2dd70437fd77dbe71f4"
 			},
-			"marks" : [
-				{
-					"type" : "line",
-					"properties" : {
-						"update" : {
-							"x" : {
-								"field" : "data.x",
-								"scale" : "x"
-							},
-							"y" : {
-								"field" : "data.y",
-								"scale" : "y"
-							},
-							"stroke" : {
-								"value" : "#000000"
-							}
-						}
+			"properties" : {
+				"update" : {
+					"x" : {
+						"field" : "data.x",
+						"scale" : "x"
+					},
+					"y" : {
+						"field" : "data.y",
+						"scale" : "y"
+					},
+					"text" : {
+						"field" : "data.label"
+					},
+					"fontSize" : {
+						"value" : 14.173
+					},
+					"fill" : {
+						"value" : "#000000"
 					}
 				}
-			]
+			}
 		}
 	],
 	"axes" : [

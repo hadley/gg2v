@@ -38,3 +38,21 @@ convert_size <- function(x, dpi = 72) {
 
   x / 25.4 * dpi
 }
+
+# The specification of ‘fontface’ can be an integer or a string.  If
+# an integer, then it follows the R base graphics standard: 1 =
+# plain, 2 = bold, 3 = italic, 4 = bold italic.  If a string, then
+# valid values are: ‘"plain"’, ‘"bold"’, ‘"italic"’, ‘"oblique"’,
+# and ‘"bold.italic"’.  For the special case of the HersheySerif
+# font family, ‘"cyrillic"’, ‘"cyrillic.oblique"’, and ‘"EUC"’ are
+# also available.
+convert_face <- function(x) {
+  if (is.null(x)) return()
+
+  list(
+    plain = list(),
+    bold = list(weight = "bold"),
+    italic = list(style = "italic"),
+    bold.italic = list(weight = "bold", style = "italic")
+  )[[x]]
+}

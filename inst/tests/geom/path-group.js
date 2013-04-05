@@ -133,7 +133,7 @@
 								"scale" : "y"
 							},
 							"stroke" : {
-								"value" : "black"
+								"value" : "#000000"
 							}
 						}
 					}
