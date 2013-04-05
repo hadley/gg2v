@@ -8,7 +8,7 @@ base <- ggplot(df, aes(x, y))
 base + geom_point()
 save_spec("geom/point.js")
 
-base + geom_point(size = 50, colour = "red", shape = 1)
+base + geom_point(size = 20, colour = "red", shape = 1)
 save_spec("geom/point-params.js")
 
 base + geom_point(aes(colour = z))

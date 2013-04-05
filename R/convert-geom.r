@@ -7,6 +7,10 @@ convert_geom <- function(geom, data_name, data, aes, params) {
 convert_geom_point <- function(data_name, data, aes, params) {
   def <- list(fill = "black")
   params <- modify_list(def, params)
+  if (!is.null(params$size)) {
+    # size is in pixels^2
+    params$size <- params$size ^ 2
+  }
 
   map <- convert_map(aes)
   map$size <- map_value(aes$size, "size")
@@ -14,7 +18,7 @@ convert_geom_point <- function(data_name, data, aes, params) {
 
   par <- convert_set(params)
   par$size <- valref(convert_size(params$size))
-  par$symbol <- valref(convert_shape(params$shape))
+  par$shape <- valref(convert_shape(params$shape))
 
   props <- modify_list(map, par)
   if (!has_name("fill", props) && has_name("stroke", props)) {
