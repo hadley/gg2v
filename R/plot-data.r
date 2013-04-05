@@ -38,11 +38,27 @@ save_one <- function(x, name, base_dir) {
   path <- file.path(base_dir, paste0(name, ".csv"))
   write.csv(x, path, row.names = FALSE)
 
+  parse <- compact(lapply(x, parse_type))
+
   list(
     name = name,
     url = file.path("data", basename(path)),
-    format = list(type = "csv")
+    format = list(
+      type = "csv",
+      parse = parse)
   )
+}
+
+parse_type <- function(x) {
+  if (is.numeric(x)) {
+    "number"
+  } else if (is.logical(x)) {
+    "boolean"
+  } else if (is.POSIXct(x) || is.Date(x)) {
+    "date"
+  } else {
+    NULL
+  }
 }
 
 #' @rdname save_data
