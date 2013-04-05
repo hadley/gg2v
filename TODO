@@ -3,7 +3,7 @@ TODO
 * rects, bars and tiles
 
 * other geoms: ribbon, smooth, crossbar, errorbar, linerange, polygon, rug, 
-    step, text
+    step
 
 * other scales: area, shape, alpha, date, date time
 
