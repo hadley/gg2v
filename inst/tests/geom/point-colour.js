@@ -71,29 +71,6 @@
 	],
 	"marks" : [
 		{
-			"type" : "rect",
-			"name" : "background",
-			"properties" : {
-				"enter" : {
-					"fill" : {
-						"value" : "#E5E5E5"
-					},
-					"y2" : {
-						"value" : 0
-					},
-					"y" : {
-						"value" : 1000
-					},
-					"x" : {
-						"value" : 0
-					},
-					"x2" : {
-						"value" : 1000
-					}
-				}
-			}
-		},
-		{
 			"type" : "symbol",
 			"from" : {
 				"data" : "5e8c93c60a31cc30a3d55dca0e7dc0c3"

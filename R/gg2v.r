@@ -93,7 +93,7 @@ plot_spec <- function(plot,
     data <- save_data(plot, data_dir)
   }
   scales <- plot_scales(plot)
-  layer <- c(list(bg_layer()), plot_layers(plot))
+  layer <- plot_layers(plot)
 
   padding <- as.list(padding)
   names(padding) <- c("top", "right", "bottom", "left")
