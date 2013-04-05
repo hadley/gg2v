@@ -7,8 +7,16 @@ convert_geom <- function(geom, data_name, data, aes, params) {
 convert_geom_point <- function(data_name, data, aes, params) {
   def <- list(fill = "black")
   params <- modify_list(def, params)
-  props <- modify_list(convert_map(aes), convert_set(params))
 
+  map <- convert_map(aes)
+  map$size <- map_value(aes$size, "size")
+  map$symbol <- map_value(aes$shape, "shape")
+
+  par <- convert_set(params)
+  par$size <- valref(convert_size(params$size))
+  par$symbol <- valref(convert_shape(params$shape))
+
+  props <- modify_list(map, par)
   if (!has_name("fill", props) && has_name("stroke", props)) {
     props$fill <- props$stroke
   }
@@ -115,9 +123,7 @@ convert_map <- function(x) {
     x      = map_value(x$x, "x"),
     y      = map_value(x$y, "y"),
     fill   = map_value(x$fill, "fill"),
-    stroke = map_value(x$colour, "colour"),
-    size   = map_value(x$size, "size"),
-    shape  = map_value(x$shape, "shape")
+    stroke = map_value(x$colour, "colour")
   )
   compact(map)
 }
@@ -137,9 +143,7 @@ convert_set <- function(x) {
     x      = valref(x$x, scale = "x"),
     y      = valref(x$y, scale = "y"),
     fill   = valref(convert_colour(x$fill)),
-    stroke = valref(convert_colour(x$colour)),
-    size   = valref(convert_size(x$size)),
-    symbol = valref(convert_shape(x$shape))
+    stroke = valref(convert_colour(x$colour))
   )
   compact(set)
 }
