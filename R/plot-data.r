@@ -54,7 +54,7 @@ parse_type <- function(x) {
     "number"
   } else if (is.logical(x)) {
     "boolean"
-  } else if (is.POSIXct(x) || is.Date(x)) {
+  } else if (inherits(x, "POSIXt") || inherits(x, "Date")) {
     "date"
   } else {
     NULL
