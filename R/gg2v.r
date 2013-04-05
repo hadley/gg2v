@@ -39,7 +39,7 @@ gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
   data_dir <- file.path(base_path, "data")
   if (!file.exists(data_dir)) dir.create(data_dir)
 
-  spec <- plot_spec(plot, data_dir, ...)
+  spec <- plot_spec(plot, data_dir = data_dir, ...)
 
   # Render html template
   if (!debug) {
@@ -72,16 +72,26 @@ default_name <- function(plot) {
 #' @param padding a numeric vector of length 4 giving the padding on the
 #'  top, right, bottom and left sides respectively.
 #' @export
-plot_spec <- function(plot, data_dir, width = 600, height = 400,
-                      padding = c(20, 20, 20, 20)) {
+plot_spec <- function(plot,
+                      width = 600, height = 400,
+                      padding = c(20, 20, 20, 20),
+                      embed_data = FALSE, data_dir = NULL) {
   stopifnot(is.ggplot(plot))
-  stopifnot(is.character(data_dir), length(data_dir) == 1,
-    file.exists(data_dir), is.dir(data_dir))
   stopifnot(is.numeric(width), length(width) == 1, width > 0)
   stopifnot(is.numeric(height), length(height) == 1, height > 0)
   stopifnot(is.numeric(padding), length(padding) == 4)
 
-  data <- save_data(plot, data_dir)
+
+  if (embed_data) {
+    data <- plot_data(plot)
+    data_df <- lapply(data, d3df)
+    data <- unname(Map(function(name, values) list(name = name, values = values),
+      names(data), data_df))
+  } else {
+    stopifnot(is.character(data_dir), length(data_dir) == 1,
+      file.exists(data_dir), is.dir(data_dir))
+    data <- save_data(plot, data_dir)
+  }
   scales <- plot_scales(plot)
   layer <- c(list(bg_layer()), plot_layers(plot))
 
@@ -102,4 +112,9 @@ plot_spec <- function(plot, data_dir, width = 600, height = 400,
   )
 
   toJSON(vis, pretty = TRUE)
+}
+
+d3df <- function(x) {
+  n <- nrow(x)
+  lapply(seq_len(n), function(i) as.list(x[i, ]))
 }
