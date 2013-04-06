@@ -18,7 +18,7 @@ convert_geom_point <- function(data_name, data, aes, params) {
 
   par <- convert_set(params)
   par$size <- valref(convert_size(params$size))
-  par$shape <- valref(convert_shape(params$shape))
+  par$shape <- valref(convert_symbol(params$shape))
 
   props <- modify_list(map, par)
   if (!has_name("fill", props) && has_name("stroke", props)) {
@@ -33,30 +33,23 @@ convert_geom_point <- function(data_name, data, aes, params) {
 }
 
 convert_geom_text <- function(data_name, data, aes, params) {
-  map <- convert_map(aes)
-  map$stroke <- NULL
-  map$fill <- map_value(aes$colour, "colour")
-  map$text <- map_value(aes$label)
-  map$fontSize <- map_value(aes$size, "size")
+  gg2v <- c(
+    "align" = "hjust",
+    "angle" = "angle",
+    "baseline" = "vjust",
+    "fill" = "colour",
+    "fontSize" = "size",
+    "style" = "family",
+    "text" = "label",
+    "weight" = "family",
+    "x" = "x",
+    "y" = "y"
+  )
+  map <- map_extract(aes, gg2v)
+  set <- set_extract(params, gg2v)
+  def <- set_extract(list(colour = "black", size = 5), gg2v)
 
-  par <- convert_set(params)
-  par$stroke <- NULL
-  par$fill <- valref(params$colour)
-  par$text <- valref(params$label)
-  par$fontSize <- valref(convert_size(params$size))
-  par$align <- valref(params$hjust)
-  par$baseline <- valref(params$vjust)
-  par$angle <- valref(params$angle)
-
-  # Font settings
-  face <- convert_face(params$fontface)
-  par$font <- valref(params$fontfamily)
-  par$fontWeight <- valref(face$weight)
-  par$fontStyle <- valref(face$style)
-
-  props <- modify_list(map, par)
-  props$fontSize <- props$fontSize %||% valref(convert_size(5))
-  props$fill <- props$fill %||% valref(convert_colour("black"))
+  props <- modify_list(def, modify_list(map, set))
 
   mark(
     type = "text",
@@ -68,7 +61,7 @@ convert_geom_text <- function(data_name, data, aes, params) {
 #' @importFrom plyr is.discrete
 convert_geom_path <- function(data_name, data, aes, params) {
   props <- modify_list(convert_map(aes), convert_set(params))
-  props$stroke <- props$stroke %||% valref(convert_colour("black"))
+  props$stroke <- props$stroke %||% valref(convert_stroke("black"))
 
   mark(
     type = "group",
@@ -120,24 +113,19 @@ group_by <- function(aes, data) {
   as.list(group_by)
 }
 
-convert_map <- function(x) {
+map_extract <- function(x, from) extract_many(x, from, "map")
+set_extract <- function(x, from) extract_many(x, from, "set")
+
+extract_many <- function(x, from, type = "map") {
   stopifnot(is.list(x))
+  stopifnot(is.character(from), !is.null(names(from)), all(names(from) != ""))
+  type <- match.arg(type, c("map", "set"))
+  type_f <- list(map = map_value, set = set_value)[[type]]
 
-  map <- list(
-    x      = map_value(x$x, "x"),
-    y      = map_value(x$y, "y"),
-    fill   = map_value(x$fill, "fill"),
-    stroke = map_value(x$colour, "colour")
-  )
-  compact(map)
-}
-
-map_value <- function(mapping, scale = NULL) {
-  if (is.atomic(mapping)) {
-    valref(value = mapping, scale = scale)
-  } else {
-    valref(field = deparse(mapping), scale = scale)
-  }
+  pieces <- Map(function(from, to) {
+    type_f(x[[from]], to, from)},
+    from, names(from))
+  compact(pieces)
 }
 
 convert_set <- function(x) {
@@ -146,9 +134,19 @@ convert_set <- function(x) {
   set <- list(
     x      = valref(x$x, scale = "x"),
     y      = valref(x$y, scale = "y"),
-    fill   = valref(convert_colour(x$fill)),
-    stroke = valref(convert_colour(x$colour))
+    fill   = valref(convert_fill(x$fill)),
+    stroke = valref(convert_stroke(x$colour))
   )
   compact(set)
 }
+convert_map <- function(x) {
+  stopifnot(is.list(x))
 
+  map <- list(
+    x = map_value(x$x, "x", "x"),
+    y = map_value(x$y, "y", "y"),
+    fill   = map_value(x$fill, "fill", "fill"),
+    stroke = map_value(x$colour, "stroke", "colour")
+  )
+  compact(map)
+}

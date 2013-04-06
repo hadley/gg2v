@@ -55,6 +55,15 @@
 			},
 			"properties" : {
 				"update" : {
+					"fill" : {
+						"value" : "#FF0000"
+					},
+					"fontSize" : {
+						"value" : 14.173
+					},
+					"text" : {
+						"field" : "data.label"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"
@@ -62,18 +71,6 @@
 					"y" : {
 						"field" : "data.y",
 						"scale" : "y"
-					},
-					"text" : {
-						"field" : "data.label"
-					},
-					"fill" : {
-						"value" : "red"
-					},
-					"fontStyle" : {
-						"value" : "italic"
-					},
-					"fontSize" : {
-						"value" : 14.173
 					}
 				}
 			}

@@ -75,7 +75,7 @@
 						"value" : "#FF0000"
 					},
 					"size" : {
-						"value" : 1133.9
+						"value" : 1.2856e+06
 					},
 					"shape" : {
 						"value" : "square"

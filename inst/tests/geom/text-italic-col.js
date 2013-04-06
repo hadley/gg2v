@@ -71,6 +71,17 @@
 			},
 			"properties" : {
 				"update" : {
+					"fill" : {
+						"value" : "#000000",
+						"field" : "data.label",
+						"scale" : "colour"
+					},
+					"fontSize" : {
+						"value" : 14.173
+					},
+					"text" : {
+						"field" : "data.label"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"
@@ -78,19 +89,6 @@
 					"y" : {
 						"field" : "data.y",
 						"scale" : "y"
-					},
-					"fill" : {
-						"field" : "data.label",
-						"scale" : "colour"
-					},
-					"text" : {
-						"field" : "data.label"
-					},
-					"fontStyle" : {
-						"value" : "italic"
-					},
-					"fontSize" : {
-						"value" : 14.173
 					}
 				}
 			}

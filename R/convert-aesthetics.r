@@ -1,11 +1,20 @@
+convert_value <- function(x, visprop = NULL) {
+  if (is.null(visprop)) return(x)
+  stopifnot(is.character(visprop), length(visprop) == 1)
 
-convert_colour <- function(x) {
+  f <- paste0("convert_", visprop)
+  if (!exists(f, mode = "function")) return(x)
+
+  get(f, mode = "function")(x)
+}
+
+convert_fill <- convert_stroke <- function(x) {
   if (is.null(x)) return(x)
 
   rgb(t(col2rgb(x)), max = 255)
 }
 
-convert_shape <- function(x) {
+convert_symbol <- function(x) {
   if (is.null(x)) return(x)
 
   # http://www.cookbook-r.com/Graphs/Shapes_and_line_types/
@@ -33,10 +42,14 @@ shape_aesthetics <- function(x) {
 }
 
 #' Approximately convert mm to pixels
-convert_size <- function(x, dpi = 72) {
+convert_fontSize <- function(x, dpi = 72) {
   if (is.null(x)) return(x)
 
   x / 25.4 * dpi
+}
+convert_size <- function(x, dpi = 72) {
+  if (is.null(x)) return(x)
+  convert_fontSize(x, dpi = dpi) ^ 2
 }
 
 # The specification of ‘fontface’ can be an integer or a string.  If
@@ -46,13 +59,20 @@ convert_size <- function(x, dpi = 72) {
 # and ‘"bold.italic"’.  For the special case of the HersheySerif
 # font family, ‘"cyrillic"’, ‘"cyrillic.oblique"’, and ‘"EUC"’ are
 # also available.
-convert_face <- function(x) {
+convert_weight <- function(x) {
   if (is.null(x)) return()
 
   list(
-    plain = list(),
-    bold = list(weight = "bold"),
-    italic = list(style = "italic"),
-    bold.italic = list(weight = "bold", style = "italic")
+    bold = "bold",
+    bold.italic = "bold"
+  )[[x]]
+}
+convert_style <- function(x) {
+  if (is.null(x)) return()
+
+  list(
+    italic = "italic",
+    bold.italic = "italic",
+    oblique = "oblique"
   )[[x]]
 }

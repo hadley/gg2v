@@ -18,7 +18,7 @@ bg_layer <- function()  {
     type = "rect",
     name = "background",
     properties = mark_props(enter = list(
-      fill = valref(convert_colour("grey90")),
+      fill = valref(convert_fill("grey90")),
       y2 = valref(0),
       y = valref(1000),
       x = valref(0),
