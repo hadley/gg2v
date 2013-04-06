@@ -33,7 +33,7 @@ convert_geom_point <- function(data_name, data, aes, params) {
 }
 
 convert_geom_text <- function(data_name, data, aes, params) {
-  gg2v <- c(
+  props <- make_props(aes, params, list(colour = "black", size = 5), c(
     "align" = "hjust",
     "angle" = "angle",
     "baseline" = "vjust",
@@ -44,12 +44,7 @@ convert_geom_text <- function(data_name, data, aes, params) {
     "weight" = "family",
     "x" = "x",
     "y" = "y"
-  )
-  map <- map_extract(aes, gg2v)
-  set <- set_extract(params, gg2v)
-  def <- set_extract(list(colour = "black", size = 5), gg2v)
-
-  props <- modify_list(def, modify_list(map, set))
+  ))
 
   mark(
     type = "text",
@@ -126,6 +121,14 @@ extract_many <- function(x, from, type = "map") {
     type_f(x[[from]], to, from)},
     from, names(from))
   compact(pieces)
+}
+
+make_props <- function(aes, set, def, gg2v) {
+  map <- map_extract(aes, gg2v)
+  set <- set_extract(set, gg2v)
+  def <- set_extract(def, gg2v)
+
+  modify_list(def, modify_list(map, set))
 }
 
 convert_set <- function(x) {
