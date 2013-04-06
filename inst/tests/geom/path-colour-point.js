@@ -117,6 +117,10 @@
 					"type" : "line",
 					"properties" : {
 						"update" : {
+							"stroke" : {
+								"field" : "data.z2",
+								"scale" : "colour"
+							},
 							"x" : {
 								"field" : "data.x",
 								"scale" : "x"
@@ -124,10 +128,6 @@
 							"y" : {
 								"field" : "data.y",
 								"scale" : "y"
-							},
-							"stroke" : {
-								"field" : "data.z2",
-								"scale" : "colour"
 							}
 						}
 					}
@@ -141,6 +141,9 @@
 			},
 			"properties" : {
 				"update" : {
+					"stroke" : {
+						"value" : "#000000"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"

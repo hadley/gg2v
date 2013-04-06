@@ -101,6 +101,9 @@
 					"type" : "line",
 					"properties" : {
 						"update" : {
+							"stroke" : {
+								"value" : "#000000"
+							},
 							"x" : {
 								"field" : "data.x",
 								"scale" : "x"
@@ -108,9 +111,6 @@
 							"y" : {
 								"field" : "data.y",
 								"scale" : "y"
-							},
-							"stroke" : {
-								"value" : "#000000"
 							}
 						}
 					}

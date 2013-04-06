@@ -60,6 +60,9 @@
 			},
 			"properties" : {
 				"update" : {
+					"stroke" : {
+						"value" : "#FF0000"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"
@@ -68,17 +71,14 @@
 						"field" : "data.y",
 						"scale" : "y"
 					},
-					"fill" : {
-						"value" : "#000000"
-					},
-					"stroke" : {
-						"value" : "#FF0000"
-					},
 					"size" : {
-						"value" : 1.2856e+06
+						"value" : 3214.1
 					},
-					"shape" : {
+					"symbol" : {
 						"value" : "square"
+					},
+					"fill" : {
+						"value" : "#FF0000"
 					}
 				}
 			}

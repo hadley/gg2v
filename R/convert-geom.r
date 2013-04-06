@@ -5,23 +5,16 @@ convert_geom <- function(geom, data_name, data, aes, params) {
 }
 
 convert_geom_point <- function(data_name, data, aes, params) {
-  def <- list(fill = "black")
-  params <- modify_list(def, params)
-  if (!is.null(params$size)) {
-    # size is in pixels^2
-    params$size <- params$size ^ 2
-  }
+  props <- make_props(aes, params, list(colour = "black"), c(
+    "fill" = "fill",
+    "stroke" = "colour",
+    "size" = "size",
+    "symbol" = "shape",
+    "x" = "x",
+    "y" = "y"
+  ))
 
-  map <- convert_map(aes)
-  map$size <- map_value(aes$size, "size")
-  map$symbol <- map_value(aes$shape, "shape")
-
-  par <- convert_set(params)
-  par$size <- valref(convert_size(params$size))
-  par$shape <- valref(convert_symbol(params$shape))
-
-  props <- modify_list(map, par)
-  if (!has_name("fill", props) && has_name("stroke", props)) {
+  if (has_name("stroke", props) && !has_name("fill", props)) {
     props$fill <- props$stroke
   }
 
@@ -55,8 +48,13 @@ convert_geom_text <- function(data_name, data, aes, params) {
 
 #' @importFrom plyr is.discrete
 convert_geom_path <- function(data_name, data, aes, params) {
-  props <- modify_list(convert_map(aes), convert_set(params))
-  props$stroke <- props$stroke %||% valref(convert_stroke("black"))
+  props <- make_props(aes, params, list(colour = "black"), c(
+    "fill" = "fill",
+    "stroke" = "colour",
+    "strokeWidth" = "size",
+    "x" = "x",
+    "y" = "y"
+  ))
 
   mark(
     type = "group",

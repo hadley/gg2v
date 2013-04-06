@@ -77,6 +77,10 @@
 			},
 			"properties" : {
 				"update" : {
+					"stroke" : {
+						"field" : "data.z",
+						"scale" : "colour"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"
@@ -85,12 +89,9 @@
 						"field" : "data.y",
 						"scale" : "y"
 					},
-					"stroke" : {
+					"fill" : {
 						"field" : "data.z",
 						"scale" : "colour"
-					},
-					"fill" : {
-						"value" : "#000000"
 					}
 				}
 			}

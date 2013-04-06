@@ -60,6 +60,9 @@
 			},
 			"properties" : {
 				"update" : {
+					"stroke" : {
+						"value" : "#000000"
+					},
 					"x" : {
 						"field" : "data.x",
 						"scale" : "x"

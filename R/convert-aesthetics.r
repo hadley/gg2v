@@ -42,7 +42,7 @@ shape_aesthetics <- function(x) {
 }
 
 #' Approximately convert mm to pixels
-convert_fontSize <- function(x, dpi = 72) {
+convert_strokeWidth <- convert_fontSize <- function(x, dpi = 72) {
   if (is.null(x)) return(x)
 
   x / 25.4 * dpi

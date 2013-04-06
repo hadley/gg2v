@@ -72,7 +72,6 @@
 			"properties" : {
 				"update" : {
 					"fill" : {
-						"value" : "#000000",
 						"field" : "data.label",
 						"scale" : "colour"
 					},

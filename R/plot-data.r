@@ -116,7 +116,7 @@ standard_aes <- function(plot) {
 
 combine_aes <- function(layer_aes, params, plot_aes = NULL, inherit = TRUE) {
   if (inherit) {
-    aesthetics <- compact(modify_list(plot_aes, layer_aes))
+    aesthetics <- compact(modify_list(plot_aes, layer_aes, recurse = TRUE))
   } else {
     aesthetics <- layer_aes
   }

@@ -13,11 +13,17 @@ maybe <- function(f) {
   }
 }
 
-modify_list <- function(x, y) {
+modify_list <- function(x, y, recurse = FALSE) {
   if (is.null(x)) x <- list()
   if (is.null(y)) y <- list()
 
-  modifyList(x, y)
+  if (recurse) {
+    modifyList(x, y)
+  } else {
+    x[names(y)] <- y
+    x
+  }
+
 }
 
 is.dir <- function(x) {
