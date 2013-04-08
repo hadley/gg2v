@@ -1,5 +1,6 @@
-context("geom: text")
+context("geom_text")
 
+library(ggplot2)
 df <- data.frame(x = 1:3, y = 1:3, label = c("a", "b", "c"))
 base <- ggplot(df, aes(x, y, label = label))
 
