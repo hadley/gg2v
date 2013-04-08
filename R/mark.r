@@ -13,7 +13,7 @@ no_scales <- c("group", "label")
 map_value <- function(x, visprop, scale = NULL) {
   if (is.null(x)) return()
 
-  if (!is.null(scale) && scale %in% no_scales) scale <- NULL
+  scale <- aes_to_scale[[scale]]
   if (is.atomic(x)) {
     out <- valref(value = x, scale = scale)
   } else {
@@ -21,7 +21,6 @@ map_value <- function(x, visprop, scale = NULL) {
   }
   out
 }
-
 
 # Converts value (if converter available), and scales x and y values only
 #

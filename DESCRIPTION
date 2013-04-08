@@ -27,3 +27,4 @@ Collate:
     'show.r'
     'temp-dir.r'
     'utils.r'
+    'zzz.r'

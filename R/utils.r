@@ -4,6 +4,15 @@ is.waiver <- function(x) inherits(x, "waiver")
   if (is.null(a) || is.waiver(a)) b else a
 }
 
+
+"append<-" <- function(x, value) {
+  if (is.null(x)) {
+    list(value)
+  } else {
+    c(x, list(value))
+  }
+}
+
 compact <- function(x) Filter(Negate(is.null), x)
 
 maybe <- function(f) {

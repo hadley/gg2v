@@ -25,6 +25,24 @@ convert_geom_point <- function(data_name, data, aes, params) {
   )
 }
 
+convert_geom_rect <- function(data_name, data, aes, params) {
+  props <- make_props(aes, params, list(fill = "grey20"), c(
+    "fill" = "fill",
+    "stroke" = "colour",
+    "x" = "xmin",
+    "y" = "ymin",
+    "x2" = "xmax",
+    "y2" = "ymax"
+  ))
+
+  mark(
+    type = "rect",
+    from = list(data = data_name),
+    properties = mark_props(props)
+  )
+}
+
+
 convert_geom_text <- function(data_name, data, aes, params) {
   props <- make_props(aes, params, list(colour = "black", size = 5), c(
     "align" = "hjust",

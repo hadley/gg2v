@@ -7,22 +7,28 @@ plot_scales <- function(plot) {
   aes <- standard_aes(plot)
   names(aes) <- data_hash
 
-  # For each scale, build a list of all datasets that use it
-  aesthetics <- unique(unlist(lapply(aes, names)))
+  # e.g. x, xmin and xmax are all mapped to the same scale:
+  # need to combine specification
+  uses <- list()
+  for (i in seq_along(aes)) {
+    # For each layer
+    layer_map <- aes[[i]]
+    layer_data <- data[[data_hash[i]]]
 
-  make_ref <- function(scale, hash) {
-    col <- aes[[hash]][[scale]]
-    if (is.null(col)) return()
+    for (j in seq_along(layer_map)) {
+      # For each aesthetic mapping
+      scale <- names(layer_map)[[j]]
+      col <- layer_map[[j]]
+      nm <- deparse(col)
 
-    nm <- deparse(col)
-    if (!has_name(nm, data[[hash]])) return()
+      if (!has_name(nm, layer_data)) next
 
-    dataref(hash, nm)
+      visprop <- aes_to_scale[[scale]]
+      if (is.null(visprop)) next
+      append(uses[[visprop]]) <- dataref(data_hash[i], nm)
+    }
   }
-  uses <- lapply(aesthetics, function(scale) {
-    compact(lapply(data_hash, make_ref, scale = scale))
-  })
-  # Until vega can handle
+  # Until vega can handle it
   uses <- lapply(uses, "[[", 1)
 
   # Get or generate scales as needed
@@ -30,7 +36,7 @@ plot_scales <- function(plot) {
     plot$scales$get_scales(aesthetic) %||%
       find_scale(aesthetic, data[data_hash], aes, plot$plot_env)
   }
-  scales <- lapply(aesthetics, get_scale)
+  scales <- lapply(names(uses), get_scale)
 
   compact(Map(convert_scale, scales, uses))
 }
@@ -52,7 +58,9 @@ find_scale <- function(scale, data, aesthetics, env) {
 
 
 default_scale <- function(scale, data, aesthetics, env) {
-  var <- aesthetics[[scale]]
+  # Use first candidate variable for this scale
+  aes <- scale_to_aes[[scale]]
+  var <- aesthetics[intersect(aes, names(aesthetics))][[1]]
 
   # Variable not used on this layer
   if (is.null(var)) return()
