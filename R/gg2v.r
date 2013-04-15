@@ -82,8 +82,10 @@ plot_spec <- function(plot,
   stopifnot(is.numeric(height), length(height) == 1, height > 0)
   stopifnot(is.numeric(padding), length(padding) == 4)
 
+  pd <- plot_data(plot)
+
   if (embed_data) {
-    data <- plot_data(plot)
+    data <- pd$data
     data_df <- lapply(data, d3df)
     data <- unname(Map(function(name, values) list(name = name, values = values),
       names(data), data_df))
@@ -92,8 +94,8 @@ plot_spec <- function(plot,
       file.exists(data_dir), is.dir(data_dir))
     data <- save_data(plot, data_dir)
   }
-  scales <- plot_scales(plot)
-  layer <- plot_layers(plot)
+  scales <- plot_scales(plot, pd)
+  layer <- plot_layers(plot, pd)
 
   padding <- as.list(padding)
   names(padding) <- c("top", "right", "bottom", "left")

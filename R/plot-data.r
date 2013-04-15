@@ -28,7 +28,7 @@ save_data <- function(plot, path) {
   stopifnot(is.character(path), length(path) == 1,
     file.exists(path), is.dir(path))
 
-  data <- plot_data(plot)
+  data <- plot_data(plot)$data
   out <- Map(function(x, name) save_one(x, name, base_dir = path),
     data, names(data))
   invisible(unname(out))
@@ -72,16 +72,82 @@ plot_data <- function(plot) {
   data <- standard_data(plot)
   aes <- standard_aes(plot)
 
-  # For each, data set, figure out what aesthetics we need
-  combine_aes <- function(x) unique(unlist(x, use.names = FALSE))
+  # Process statistics which potentially change data and aesthetics.
+  stats <- lapply(plot$layers, "[[", "stat")
+  params <- lapply(plot$layers, "[[", "stat_param")
+  out <- Map(function(data, aes, stats, params) {
+    process_stats(data, aes, stats, params, plot$plot_env)
+  }, data, aes, stats, params)
 
+  data <- lapply(out, "[[", "data")
+  aes <- lapply(out, "[[", "aes")
+
+  # For each, data set, figure out what aesthetics we need
   data_hash <- vapply(data, digest, character(1))
+  names(aes) <- data_hash
+
+  combine_aes <- function(x) unique(unlist(x, use.names = FALSE))
   data_aes <- lapply(split(aes, data_hash), combine_aes)
   udata <- lapply(split(data, data_hash), "[[", 1)
 
   # Evaluate all aesthetics so we don't need to do any computation in js
-  Map(function(data, aes) render_data(data, aes, env = plot$plot_env),
+  layer_data <- Map(function(data, aes) render_data(data, aes, env = plot$plot_env),
     udata, data_aes)
+
+  list(hash = data_hash, data = layer_data, aes = aes)
+}
+
+process_stats <- function(data, aes, stat, params, env) {
+  if (stat$objname == "identity" || is.null(data) || nrow(data) == 0) {
+    return(list(data = data, aes = aes))
+  }
+
+  # Map variable names to aesthetics
+  raw_aes <- aes[!is_calculated_aes(aes)]
+  data <- lapply(raw_aes, eval, envir = data, enclos = env)
+  data <- as.data.frame(data)
+
+  # Add group
+  data <- ggplot2:::add_group(data)
+
+  # Make dummy scales
+  scales <- list(x = scale_dummy(data$x), y = scale_dummy(data$y))
+
+  # Compute statistic
+  call <- combine(
+    quote(stat$calculate_groups(stat, data = data, scales = scales)),
+    params
+  )
+
+  out <- failwith(data.frame(), eval)(call, environment())
+
+  # Generate new aesthetics
+  if (!is.null(stat$default_aes)) {
+    all_aes <- modify_list(stat$default_aes(), aes)
+  } else {
+    all_aes <- aes
+  }
+  stat_aes <- all_aes[is_calculated_aes(all_aes)]
+
+  # Previous raw aesthetics now just get re-mapped. Computed aesthetics
+  # get mapped
+  raw2 <- setNames(lapply(names(raw_aes), as.name), names(raw_aes))
+  stat2 <- lapply(stat_aes, {
+    function(x) as.name(gsub("^\\.\\.|\\.\\.$", "", deparse(x)))
+  })
+  aes <- c(raw2, stat2)
+
+  # Map aesthetics back to variable names
+  list(data = out, aes = aes)
+}
+
+scale_dummy <- function(x) structure(list(x), class = "dummy")
+scale_dimension.dummy <- function(x, ...) {
+  if (is.numeric(x[[1]])) {
+    range(x[[1]])
+  } else {
+    length(unique(x[[1]]))
+  }
 }
 
 render_data <- function(data, aes, env = parent.env()) {

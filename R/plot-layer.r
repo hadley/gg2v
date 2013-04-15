@@ -1,11 +1,10 @@
 
-plot_layers <- function(plot) {
+plot_layers <- function(plot, pd) {
   stopifnot(is.ggplot(plot))
 
-  data <- plot_data(plot)
-  data_hash <- vapply(standard_data(plot), digest, character(1))
-  aes <- standard_aes(plot)
-
+  data <- pd$data
+  data_hash <- pd$hash
+  aes <- pd$aes
 
   geoms <- lapply(plot$layers, function(x) x$geom$objname)
   params <- lapply(plot$layers, function(x) x$geom_params)

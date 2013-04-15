@@ -50,3 +50,22 @@ invert <- function(L) {
 has_name <- function(nm, x) {
   nm %in% names(x)
 }
+
+failwith <- function(default = NULL, f, quiet = FALSE) {
+  f <- match.fun(f)
+  function(...) {
+    out <- default
+    try(out <- f(...), silent = quiet)
+    out
+  }
+}
+
+
+combine <- function(x, y) {
+  n <- length(x)
+  for(i in seq_along(y)) {
+    x[[n + i]] <- y[[i]]
+  }
+  x
+}
+

@@ -1,11 +1,9 @@
-plot_scales <- function(plot) {
+plot_scales <- function(plot, pd) {
   stopifnot(is.ggplot(plot))
 
-  data <- plot_data(plot)
-  data_hash <- vapply(standard_data(plot), digest, character(1))
-
-  aes <- standard_aes(plot)
-  names(aes) <- data_hash
+  data <- pd$data
+  data_hash <- pd$hash
+  aes <- pd$aes
 
   # e.g. x, xmin and xmax are all mapped to the same scale:
   # need to combine specification

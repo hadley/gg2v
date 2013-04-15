@@ -1,29 +1,17 @@
 TODO
 
-* bars and tiles
-
-* other geoms: ribbon, smooth, crossbar, errorbar, linerange, polygon, rug, 
-    step
-
-* other scales: area, shape, alpha, date, date time
-
 * position adjustments turn into data transforms (+ change var mapping)
   * jitter: no equiv
   * stack: stack
   * fill: stack + offset = expand
   * dodge: no equiv?
 
-* testing framework
-  * ideally output spec, rendered png and ggplot2 png
-  * use git to spot changes
+* bars and tiles
 
-* process statistics
-  * map variable names to aesthetics
-  * transform according to scales
-  * compute statistics
-  * set up special scales mapping (e.g. y = ..count..)
-  * back-transform according to scales
-  * unmap variable names (where possible)
+* other geoms: ribbon, smooth, crossbar, errorbar, linerange, polygon, rug, 
+    step
+
+* other scales: area, shape, alpha, date, date time
 
 * process facetting
   * embed each layer in group mark(s)
