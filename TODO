@@ -8,7 +8,7 @@ TODO
 
 * bars and tiles
 
-* other geoms: ribbon, smooth, crossbar, errorbar, linerange, polygon, rug, 
+* other geoms: crossbar, errorbar, linerange, polygon, rug, 
     step
 
 * other scales: area, shape, alpha, date, date time
