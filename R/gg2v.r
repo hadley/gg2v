@@ -18,7 +18,7 @@
 #' @importFrom whisker whisker.render
 #' @importFrom ggplot2 is.ggplot
 #' @importFrom RJSONIO toJSON
-#' @docType package
+#' @aliases gg2v-package
 gg2v <- function(base_path = ".", plot = last_plot(), name = "test", ...,
                  debug = TRUE) {
   stopifnot(is.character(base_path), length(base_path) == 1,
@@ -68,6 +68,8 @@ default_name <- function(plot) {
 }
 
 
+#' Output plot specification
+#'
 #' @param width width of visualisation in pixels
 #' @param height height of visualisation in pixels
 #' @param padding a numeric vector of length 4 giving the padding on the
