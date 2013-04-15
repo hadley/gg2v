@@ -58,7 +58,9 @@ find_scale <- function(scale, data, aesthetics, env) {
 default_scale <- function(scale, data, aesthetics, env) {
   # Use first candidate variable for this scale
   aes <- scale_to_aes[[scale]]
-  var <- aesthetics[intersect(aes, names(aesthetics))][[1]]
+  vars <- aesthetics[intersect(aes, names(aesthetics))]
+  if (length(vars) == 0) return()
+  var <- vars[[1]]
 
   # Variable not used on this layer
   if (is.null(var)) return()
