@@ -28,3 +28,4 @@ Collate:
     'temp-dir.r'
     'utils.r'
     'zzz.r'
+    'vg2png.r'
