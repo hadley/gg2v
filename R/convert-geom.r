@@ -130,6 +130,19 @@ convert_geom_ribbon <- function(data_name, data, aes, params) {
   )
 }
 
+convert_geom_smooth <- function(data_name, data, aes, params) {
+  # This is inefficient since it does the transformation twice, but
+  # it only needs to do it once.  Could rewrite, but not currently worth
+  # the bother
+  mark(
+    type = "group",
+    marks = list(
+      convert_geom_ribbon(data_name, data, aes, params),
+      convert_geom_line(data_name, data, aes, params)
+    )
+  )
+}
+
 convert_geom_line <- function(data_name, data, aes, params) {
   mark <- convert_geom_path(data_name, data, aes, params)
 
