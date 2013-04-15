@@ -98,6 +98,38 @@ convert_geom_area <- function(data_name, data, aes, params) {
   mark
 }
 
+convert_geom_ribbon <- function(data_name, data, aes, params) {
+  props <- make_props(aes, params, list(fill = "grey60"), c(
+    "fill" = "fill",
+    "stroke" = "colour",
+    "strokeWidth" = "size",
+    "x" = "x",
+    "y" = "ymin",
+    "y2" = "ymax"
+  ))
+
+  mark(
+    type = "group",
+    from = list(
+      data = data_name,
+      transform = list(
+        list(
+          type = "facet",
+          keys = group_by(aes, data)
+        ),
+        list(
+          type = "sort",
+          by = paste0("data.", deparse(aes$x))
+        )
+      )
+    ),
+    marks = list(mark(
+      type = "area",
+      properties = mark_props(props)
+    ))
+  )
+}
+
 convert_geom_line <- function(data_name, data, aes, params) {
   mark <- convert_geom_path(data_name, data, aes, params)
 
