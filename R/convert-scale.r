@@ -1,7 +1,9 @@
 convert_scale <- function(x, uses, ...) UseMethod("convert_scale")
 
+#' @S3method convert_scale NULL
 convert_scale.NULL <- function(x, uses, ...) NULL
 
+#' @S3method convert_scale position_c
 convert_scale.position_c <- function(x, uses, ...) {
   var <- x$aesthetics[[1]]
   scale(
@@ -14,6 +16,7 @@ convert_scale.position_c <- function(x, uses, ...) {
   )
 }
 
+#' @S3method convert_scale position_d
 convert_scale.position_d <- function(x, uses, ...) {
   var <- x$aesthetics[[1]]
   scale(
@@ -25,6 +28,7 @@ convert_scale.position_d <- function(x, uses, ...) {
   )
 }
 
+#' @S3method convert_scale hue
 convert_scale.hue <- function(x, uses, ...) {
   scale(
     name = x$aesthetics,
@@ -36,6 +40,7 @@ convert_scale.hue <- function(x, uses, ...) {
 }
 
 
+#' @S3method convert_scale gradient
 convert_scale.gradient <- function(x, uses, ...) {
   scale(
     name = x$aesthetics,

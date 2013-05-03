@@ -1,6 +1,6 @@
 #' Convert a geom into a mark specification
 convert_geom <- function(geom, data_name, data, aes, params) {
-  f <- match.fun(paste0("convert_geom_", geom))
+  f <- get(paste0("convert_geom_", geom))
   f(data_name, data, aes, params)
 }
 
