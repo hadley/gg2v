@@ -142,6 +142,8 @@ process_stats <- function(data, aes, stat, params, env) {
 }
 
 scale_dummy <- function(x) structure(list(x), class = "dummy")
+
+#' @export
 scale_dimension.dummy <- function(x, ...) {
   if (is.numeric(x[[1]])) {
     range(x[[1]])
